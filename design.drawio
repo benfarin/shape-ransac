@@ -1,0 +1,310 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="uml_design" name="Backend UML Design">
+    <mxGraphModel dx="2754" dy="3497" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="gen_layer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" value="1. GENERATOR LAYER  (generator.py)" vertex="1">
+          <mxGeometry height="780" width="430" x="40" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="generator" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="Generator" vertex="1">
+          <mxGeometry height="198" width="330" x="60" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="gen_attrs" parent="generator" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- config: Config&#xa;- outlier_rate: float&#xa;- randomness: float&#xa;- plotter: Plotter | None" vertex="1">
+          <mxGeometry height="64" width="330" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="gen_div" parent="generator" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="330" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="gen_methods" parent="generator" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ generate(): GenerationResult&#xa;- _generate_shape_instances(): List[ShapeInstance]&#xa;- _generate_inliers_for_shape(shape: Shape, ...): np.ndarray&#xa;- _generate_outliers(int): np.ndarray" vertex="1">
+          <mxGeometry height="100" width="330" y="98" as="geometry" />
+        </mxCell>
+        <mxCell id="configloader" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="ConfigLoader" vertex="1">
+          <mxGeometry height="70" width="180" x="40" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="cl_methods" parent="configloader" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ load_config(path: str): Config" vertex="1">
+          <mxGeometry height="44" width="180" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="serializer" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="Serializer" vertex="1">
+          <mxGeometry height="80" width="230" x="240" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="ser_methods" parent="serializer" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=10;" value="+ save(result: GenerationResult, path: str): None&#xa;+ load(path: str): GenerationResult" vertex="1">
+          <mxGeometry height="54" width="230" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="genresult" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="GenerationResult  «dataclass»" vertex="1">
+          <mxGeometry height="130" width="380" x="60" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="gr_attrs" parent="genresult" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ shapes: List[ShapeInstance]&#xa;+ points: np.ndarray  (N, D)&#xa;+ inlier_mask: np.ndarray  (N,)&#xa;+ config: Config" vertex="1">
+          <mxGeometry height="64" width="380" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="gr_note" parent="genresult" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=2;fontSize=10;" value="Contains all generated data and ground truth&#xa;(never used by estimator)" vertex="1">
+          <mxGeometry height="40" width="380" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="shapeinst" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="ShapeInstance  «dataclass»" vertex="1">
+          <mxGeometry height="100" width="180" x="60" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="si_attrs" parent="shapeinst" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ shape_type: ShapeType&#xa;+ params: np.ndarray  (2,)&#xa;+ id: str" vertex="1">
+          <mxGeometry height="74" width="180" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="config" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="Config  «dataclass»" vertex="1">
+          <mxGeometry height="100" width="180" x="270" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="cfg_attrs" parent="config" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ shapes: Dict[ShapeType, int]&#xa;+ num_points: int&#xa;+ randomness: float" vertex="1">
+          <mxGeometry height="74" width="180" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="shapes_layer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" value="SHAPES DOMAIN  (src/shapes/)" vertex="1">
+          <mxGeometry height="780" width="700" x="500" y="-450" as="geometry" />
+        </mxCell>
+        <mxCell id="shape" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="«interface»&#xa;Shape  (ABC)" vertex="1">
+          <mxGeometry height="200" width="300" x="700" y="-420" as="geometry" />
+        </mxCell>
+        <mxCell id="shape_methods" parent="shape" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ min_points_required(): int&#xa;+ from_points(points): Shape&#xa;+ distance_to_point(point: np.ndarray): float&#xa;+ sample_points(n: int, randomness: float): np.ndarray&#xa;+ to_dict(): Dict&#xa;+ shape_type(): ShapeType" vertex="1">
+          <mxGeometry height="160" width="300" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="line2d" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;fontSize=10;" value="Line2D" vertex="1">
+          <mxGeometry height="220" width="220" x="520" y="-140" as="geometry" />
+        </mxCell>
+        <mxCell id="l2_attrs" parent="line2d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=10;" value="- direction: np.ndarray  (2,)&#xa;- point: np.ndarray  (2,)" vertex="1">
+          <mxGeometry height="36" width="220" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="l2_div" parent="line2d" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=10;" value="" vertex="1">
+          <mxGeometry height="8" width="220" y="62" as="geometry" />
+        </mxCell>
+        <mxCell id="l2_methods" parent="line2d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=10;" value="+ min_points_required(): int  (return 2)&#xa;+ from_points(points): Line2D&#xa;+ distance_to_point(point): float&#xa;+ sample_points(n, randomness): np.ndarray&#xa;+ to_dict(): Dict&#xa;+ shape_type(): ShapeType  (return LINE2D)" vertex="1">
+          <mxGeometry height="150" width="220" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="circle2d" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;fontSize=10;" value="Circle2D" vertex="1">
+          <mxGeometry height="220" width="220" x="750" y="-140" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_attrs" parent="circle2d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=10;" value="- center: np.ndarray  (2,)&#xa;- radius: float" vertex="1">
+          <mxGeometry height="36" width="220" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_div" parent="circle2d" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=10;" value="" vertex="1">
+          <mxGeometry height="8" width="220" y="62" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_methods" parent="circle2d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=10;" value="+ min_points_required(): int  (return 3)&#xa;+ from_points(points): Circle2D&#xa;+ distance_to_point(point): float&#xa;+ sample_points(n, randomness): np.ndarray&#xa;+ to_dict(): Dict&#xa;+ shape_type(): ShapeType  (return CIRCLE2D)" vertex="1">
+          <mxGeometry height="150" width="220" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="plane3d" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;fontSize=10;" value="Plane3D" vertex="1">
+          <mxGeometry height="220" width="220" x="980" y="-140" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_attrs" parent="plane3d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=10;" value="- normal: np.ndarray  (3,)&#xa;- point: np.ndarray  (3,)" vertex="1">
+          <mxGeometry height="36" width="220" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_div" parent="plane3d" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;fontSize=10;" value="" vertex="1">
+          <mxGeometry height="8" width="220" y="62" as="geometry" />
+        </mxCell>
+        <mxCell id="p3_methods" parent="plane3d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=10;" value="+ min_points_required(): int  (return 3)&#xa;+ from_points(points): Plane3D&#xa;+ distance_to_point(point): float&#xa;+ sample_points(n, randomness): np.ndarray&#xa;+ to_dict(): Dict&#xa;+ shape_type(): ShapeType  (return PLANE3D)" vertex="1">
+          <mxGeometry height="150" width="220" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="shapetype" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="«enum»&#xa;ShapeType" vertex="1">
+          <mxGeometry height="120" width="180" x="760" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="st_vals" parent="shapetype" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="LINE2D&#xa;CIRCLE2D&#xa;PLANE3D" vertex="1">
+          <mxGeometry height="80" width="180" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="est_layer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" value="2. ESTIMATOR LAYER  (estimator.py)" vertex="1">
+          <mxGeometry height="430" width="700" x="1230" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="estimator" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="Estimator" vertex="1">
+          <mxGeometry height="190" width="330" x="1250" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="est_attrs" parent="estimator" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- debug: bool&#xa;- plotter: Plotter | None&#xa;- ransac_params: RansacParams" vertex="1">
+          <mxGeometry height="54" width="330" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="est_div" parent="estimator" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="330" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="est_methods" parent="estimator" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ estimate(points, shape_types, expected_counts):&#xa;            List[EstimatedShape]&#xa;- _estimate_single_shape(points, ShapeType): RansacResult&#xa;- _compute_residual_points(): np.ndarray" vertex="1">
+          <mxGeometry height="102" width="330" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="ransac" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="RansacEstimator" vertex="1">
+          <mxGeometry height="160" width="310" x="1600" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="rs_attrs" parent="ransac" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- threshold: float&#xa;- max_iterations: int&#xa;- min_inlier_ratio: float" vertex="1">
+          <mxGeometry height="54" width="310" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="rs_div" parent="ransac" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="310" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rs_methods" parent="ransac" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ fit(points: np.ndarray, ShapeType): RansacResult" vertex="1">
+          <mxGeometry height="72" width="310" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="estshape" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="EstimatedShape  «dataclass»" vertex="1">
+          <mxGeometry height="120" width="200" x="1250" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="es_attrs" parent="estshape" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ shape_type: ShapeType&#xa;+ params: np.ndarray  (M, D)&#xa;+ inlier_mask: np.ndarray  (N,)&#xa;+ score: float" vertex="1">
+          <mxGeometry height="94" width="200" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="rp" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="RansacParams  «dataclass»" vertex="1">
+          <mxGeometry height="110" width="200" x="1470" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="rp_attrs" parent="rp" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ threshold: float&#xa;+ max_iterations: int&#xa;+ min_inlier_ratio: float" vertex="1">
+          <mxGeometry height="84" width="200" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="rr" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="RansacResult  «dataclass»" vertex="1">
+          <mxGeometry height="120" width="220" x="1690" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="rr_attrs" parent="rr" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ model: Shape&#xa;+ inliers: np.ndarray  (M, D)&#xa;+ score: float&#xa;+ iterations: int" vertex="1">
+          <mxGeometry height="94" width="220" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="est_note" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=center;verticalAlign=middle;fontSize=11;fontStyle=2;" value="Estimator only gets points (no ground truth).&#xa;For each candidate shape type it runs RANSAC&#xa;and picks the best model." vertex="1">
+          <mxGeometry height="30" width="430" x="1380" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="test_layer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=13;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" value="3. TESTER LAYER  (tester.py)" vertex="1">
+          <mxGeometry height="400" width="720" x="1230" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="tester" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="Tester" vertex="1">
+          <mxGeometry height="160" width="320" x="1250" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="tester_attrs" parent="tester" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- debug: bool&#xa;- plotter: Plotter | None" vertex="1">
+          <mxGeometry height="40" width="320" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="tester_div" parent="tester" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="320" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="tester_methods" parent="tester" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ evaluate(gt_result: GenerationResult,&#xa;            est_result: EstimationResult): TestResult&#xa;- _compute_error(): float" vertex="1">
+          <mxGeometry height="86" width="320" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="esres" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="EstimationResult  «dataclass»" vertex="1">
+          <mxGeometry height="90" width="310" x="1600" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="esres_attrs" parent="esres" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ estimated_shapes: List[EstimatedShape]&#xa;+ config: Config" vertex="1">
+          <mxGeometry height="64" width="310" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="match" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="MatchResult  «dataclass»" vertex="1">
+          <mxGeometry height="120" width="320" x="1230" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="match_attrs" parent="match" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ gt_shape: ShapeInstance&#xa;+ est_shape: EstimatedShape&#xa;+ error: float&#xa;+ details: Dict[str, Any]" vertex="1">
+          <mxGeometry height="94" width="320" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="testres" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="TestResult  «dataclass»" vertex="1">
+          <mxGeometry height="130" width="310" x="1600" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="testres_attrs" parent="testres" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ matches: List[MatchResult]&#xa;+ mean_error: float&#xa;+ median_error: float&#xa;+ details: Dict[str, Any]" vertex="1">
+          <mxGeometry height="104" width="310" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="utils_layer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;fontSize=13;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" value="UTILS / INFRASTRUCTURE  (src/utils/)" vertex="1">
+          <mxGeometry height="180" width="1140" x="40" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="util_random" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="random_utils" vertex="1">
+          <mxGeometry height="110" width="260" x="60" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="ur_m" parent="util_random" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ random_point_2d(bounds): np.ndarray&#xa;+ random_point_3d(bounds): np.ndarray&#xa;+ gaussian_noise(scale: float, size): np.ndarray" vertex="1">
+          <mxGeometry height="84" width="260" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="util_io" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="io_utils" vertex="1">
+          <mxGeometry height="90" width="220" x="340" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="uio_m" parent="util_io" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ save_json(data: Any, path): None&#xa;+ load_json(path): Any" vertex="1">
+          <mxGeometry height="64" width="220" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="util_metrics" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="metrics" vertex="1">
+          <mxGeometry height="120" width="290" x="580" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="um_m" parent="util_metrics" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ line_distance(point, line: Line2D): float&#xa;+ circle_distance(point, circle: Circle2D): float&#xa;+ plane_distance(point, plane: Plane3D): float&#xa;+ model_error(true, est): float" vertex="1">
+          <mxGeometry height="94" width="290" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="util_exc" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="exceptions" vertex="1">
+          <mxGeometry height="100" width="270" x="890" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="uex_m" parent="util_exc" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ ShapeError(Exception)&#xa;+ ConfigurationError(Exception)&#xa;+ EstimationError(Exception)" vertex="1">
+          <mxGeometry height="74" width="270" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="viz_layer" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;fontSize=13;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" value="VISUALIZATION (debug only)  (src/visualization/)" vertex="1">
+          <mxGeometry height="200" width="700" x="1220" y="1050" as="geometry" />
+        </mxCell>
+        <mxCell id="plotter" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;swimlaneFillColor=#ffffff;fillColor=#ffffff;strokeColor=#000000;" value="Plotter" vertex="1">
+          <mxGeometry height="140" width="640" x="1250" y="1090" as="geometry" />
+        </mxCell>
+        <mxCell id="plotter_m" parent="plotter" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="+ plot_2d(points, shapes=[], title: str = &quot;&quot;): None&#xa;+ plot_3d(points, shapes=[], title: str = &quot;&quot;): None&#xa;+ plot_generator_debug(result: GenerationResult): None&#xa;+ plot_estimator_debug(result: EstimationResult): None&#xa;+ plot_tester_debug(gt_result, est_result): None" vertex="1">
+          <mxGeometry height="114" width="640" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_gen_config" edge="1" parent="1" source="generator" style="startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="config">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_gr_si" edge="1" parent="1" source="genresult" style="startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;html=1;rounded=0;exitX=0;exitY=1;entryX=0.5;entryY=0;" target="shapeinst">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_gr_cfg" edge="1" parent="1" source="genresult" style="startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;html=1;rounded=0;exitX=1;exitY=1;entryX=0.5;entryY=0;" target="config">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_est_ransac" edge="1" parent="1" source="estimator" style="startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="ransac">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_ransac_rp" edge="1" parent="1" source="ransac" style="startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="rp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_esres_es" edge="1" parent="1" source="esres" style="startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;html=1;rounded=0;" target="estshape">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_tr_match" edge="1" parent="1" source="testres" style="startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;html=1;rounded=0;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="match">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_l2_shape" edge="1" parent="1" source="line2d" style="endArrow=block;endFill=0;endSize=16;html=1;rounded=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="shape">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_c2_shape" edge="1" parent="1" source="circle2d" style="endArrow=block;endFill=0;endSize=16;html=1;rounded=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="shape">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_p3_shape" edge="1" parent="1" source="plane3d" style="endArrow=block;endFill=0;endSize=16;html=1;rounded=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="shape">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_gen_ser" edge="1" parent="1" source="gen_methods" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=0.887;exitY=1.022;entryX=0.5;entryY=0;exitDx=0;exitDy=0;exitPerimeter=0;" target="serializer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_gen_cl" edge="1" parent="1" source="generator" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=0;exitY=1;entryX=0.5;entryY=0;" target="configloader">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_gen_gr" edge="1" parent="1" source="generator" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=0.5;exitY=1;entryX=0.452;entryY=0.014;entryDx=0;entryDy=0;entryPerimeter=0;" target="genresult">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_si_st" edge="1" parent="1" source="shapeinst" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="shapetype">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_l2_st" edge="1" parent="1" source="line2d" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" target="shapetype">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_c2_st" edge="1" parent="1" source="circle2d" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="shapetype">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_p3_st" edge="1" parent="1" source="plane3d" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=0.5;exitY=1;entryX=1;entryY=0.5;" target="shapetype">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_ransac_rr" edge="1" parent="1" source="ransac" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=1;exitY=1;entryX=0.5;entryY=0;" target="rr">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_est_es" edge="1" parent="1" source="estimator" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=0;exitY=1;entryX=0.5;entryY=0;" target="estshape">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_rr_shape" edge="1" parent="1" source="rr" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;" target="shape">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_es_st" edge="1" parent="1" source="estshape" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;" target="shapetype">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_test_esres" edge="1" parent="1" source="tester" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="esres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_test_tr" edge="1" parent="1" source="tester" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=1;exitY=1;entryX=0;entryY=0.5;" target="testres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_gen_plot" edge="1" parent="1" source="generator" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;" target="plotter">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_est_plot" edge="1" parent="1" source="estimator" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;" target="plotter">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_test_plot" edge="1" parent="1" source="tester" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;" target="plotter">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_match_si" edge="1" parent="1" source="match" style="endArrow=none;startArrow=none;html=1;rounded=0;" target="shapeinst">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_match_es" edge="1" parent="1" source="match" style="endArrow=none;startArrow=none;html=1;rounded=0;" target="estshape">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
