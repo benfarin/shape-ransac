@@ -19,6 +19,14 @@ class Circle2D(Shape):
         self._center = np.asarray(center, dtype=float).reshape(2)
         self._radius = radius
 
+    @property
+    def center(self):
+        return self._center
+
+    @property
+    def radius(self):
+        return self._radius
+
     @classmethod
     def min_points_required(cls):
         return 3

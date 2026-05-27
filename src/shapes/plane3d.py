@@ -20,6 +20,14 @@ class Plane3D(Shape):
         self._normal = normal / norm
         self._point = np.asarray(point, dtype=float).reshape(3)
 
+    @property
+    def normal(self):
+        return self._normal
+
+    @property
+    def point(self):
+        return self._point
+
     @classmethod
     def min_points_required(cls):
         return 3
@@ -39,14 +47,14 @@ class Plane3D(Shape):
 
     def sample_points(self, n, randomness):
         rng = np.random.default_rng()
-        u_axis, v_axis = self._plane_basis()
+        u_axis, v_axis = self.plane_basis()
         u = rng.uniform(-0.5, 0.5, size=n)
         v = rng.uniform(-0.5, 0.5, size=n)
         base = self._point + u[:, None] * u_axis + v[:, None] * v_axis
         noise = rng.normal(0, NOISE_SCALE * randomness, size=n)
         return base + noise[:, None] * self._normal
 
-    def _plane_basis(self):
+    def plane_basis(self):
         helper = np.array([1.0, 0.0, 0.0]) if abs(self._normal[0]) < 0.9 else np.array([0.0, 1.0, 0.0])
         u = helper - (helper @ self._normal) * self._normal
         u /= np.linalg.norm(u)

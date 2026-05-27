@@ -20,6 +20,14 @@ class Line2D(Shape):
         self._direction = direction / norm
         self._point = np.asarray(point, dtype=float).reshape(2)
 
+    @property
+    def direction(self):
+        return self._direction
+
+    @property
+    def point(self):
+        return self._point
+
     @classmethod
     def min_points_required(cls):
         return 2
