@@ -1,5 +1,7 @@
 import numpy as np
 
+from src.utils.random_utils import random_point, random_unit_vector
+
 from .shape import Shape
 from .shape_type import ShapeType
 
@@ -65,3 +67,7 @@ class Plane3D(Shape):
     @classmethod
     def shape_type(cls):
         return ShapeType.PLANE3D
+
+    @classmethod
+    def random(cls):
+        return cls(normal=random_unit_vector(3), point=random_point(3))

@@ -1,5 +1,7 @@
 import numpy as np
 
+from src.utils.random_utils import random_point, random_unit_vector
+
 from .shape import Shape
 from .shape_type import ShapeType
 
@@ -58,3 +60,7 @@ class Line2D(Shape):
     @classmethod
     def shape_type(cls):
         return ShapeType.LINE2D
+
+    @classmethod
+    def random(cls):
+        return cls(direction=random_unit_vector(2), point=random_point(2))

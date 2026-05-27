@@ -52,3 +52,8 @@ class Shape(ABC):
     @abstractmethod
     def shape_type(cls) -> ShapeType:
         """The :class:`ShapeType` enum value for this concrete shape."""
+
+    @classmethod
+    @abstractmethod
+    def random(cls) -> Shape:
+        """Construct a random instance with parameters drawn in the [0, 1]^D box."""

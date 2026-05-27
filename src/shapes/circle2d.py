@@ -1,5 +1,7 @@
 import numpy as np
 
+from src.utils.random_utils import random_point
+
 from .shape import Shape
 from .shape_type import ShapeType
 
@@ -60,3 +62,8 @@ class Circle2D(Shape):
     @classmethod
     def shape_type(cls):
         return ShapeType.CIRCLE2D
+
+    @classmethod
+    def random(cls):
+        radius = float(np.random.default_rng().uniform(0.1, 0.3))
+        return cls(center=random_point(2), radius=radius)
