@@ -21,8 +21,7 @@ def main(argv=None):
     for match in test_result.matches:
         print(f"  {match.gt_shape.id}: error = {match.error:.4f}")
     print()
-    print(f"Mean error:   {test_result.mean_error:.4f}")
-    print(f"Median error: {test_result.median_error:.4f}")
+    print(f"Final score: {test_result.mean_error:.4f}")
 
     if args.debug:
         from src.visualization.plotter import Plotter

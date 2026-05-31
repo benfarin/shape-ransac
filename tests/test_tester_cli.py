@@ -28,8 +28,7 @@ def test_prints_aggregate_score(tmp_path, capsys):
     ])
 
     out = capsys.readouterr().out
-    assert "Mean error" in out
-    assert "Median error" in out
+    assert "Final score" in out
 
 
 def test_prints_per_shape_errors(tmp_path, capsys):

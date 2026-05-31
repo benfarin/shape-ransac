@@ -69,11 +69,10 @@ The terminal prints:
   Line2D_1:   error = 0.0121
   Circle2D_0: error = 0.0092
 
-Mean error:   0.0098
-Median error: 0.0092
+Final score: 0.0098
 ```
 
-Anything below `0.05` (the RANSAC inlier threshold) is good. Below `0.01` is essentially perfect.
+The final score is the mean per-shape error. Anything below `0.05` (the RANSAC inlier threshold) is good. Below `0.01` is essentially perfect.
 
 ## Config file
 
