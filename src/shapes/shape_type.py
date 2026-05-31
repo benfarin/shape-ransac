@@ -10,4 +10,5 @@ class ShapeType(Enum):
 
     LINE2D = "Line2D"
     CIRCLE2D = "Circle2D"
+    LINE3D = "Line3D"
     PLANE3D = "Plane3D"

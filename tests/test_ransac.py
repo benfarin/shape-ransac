@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from src.estimator.ransac import RansacEstimator, RansacParams
-from src.shapes import Circle2D, Line2D, Plane3D
+from src.shapes import Circle2D, Line2D, Line3D, Plane3D
 from src.utils.exceptions import EstimationError
 
 
@@ -20,6 +20,15 @@ def test_recovers_clean_circle2d():
     points = circle.sample_points(50, randomness=0.0)
 
     result = RansacEstimator().fit(points, Circle2D)
+
+    np.testing.assert_allclose(result.model.distance_to_point(points), 0.0, atol=1e-12)
+
+
+def test_recovers_clean_line3d():
+    line = Line3D(direction=[1.0, 2.0, 3.0], point=[0.5, 0.5, 0.5])
+    points = line.sample_points(50, randomness=0.0)
+
+    result = RansacEstimator().fit(points, Line3D)
 
     np.testing.assert_allclose(result.model.distance_to_point(points), 0.0, atol=1e-12)
 

@@ -108,11 +108,18 @@ def _draw_plane3d(ax, plane, color):
     ax.plot_surface(x, y, z, color=color, alpha=0.25)
 
 
+def _draw_line3d(ax, line, color):
+    t = np.linspace(-1.0, 1.0, 50)
+    pts = line.point + t[:, None] * line.direction
+    ax.plot(pts[:, 0], pts[:, 1], pts[:, 2], color=color, linewidth=1.5)
+
+
 _OVERLAY_2D = {
     ShapeType.LINE2D: _draw_line2d,
     ShapeType.CIRCLE2D: _draw_circle2d,
 }
 
 _OVERLAY_3D = {
+    ShapeType.LINE3D: _draw_line3d,
     ShapeType.PLANE3D: _draw_plane3d,
 }

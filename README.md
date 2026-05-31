@@ -8,7 +8,7 @@ Built as the three parts laid out in the assignment:
 2. **Estimator** — runs RANSAC on the points to recover each shape. Only sees the points and the schema (shape types + counts), never the ground-truth parameters.
 3. **Tester** — matches each ground-truth shape to its closest estimate of the same type and prints per-shape errors plus a single aggregate score.
 
-Supported shapes: `Line2D`, `Circle2D`, `Plane3D`.
+Supported shapes: `Line2D`, `Circle2D`, `Line3D`, `Plane3D`.
 
 The design diagram is in `design.drawio` (PNG export in `design.png`).
 
@@ -116,7 +116,7 @@ This is a known limitation of simplest sequential RANSAC, not a bug. Two ways to
 python3 -m pytest
 ```
 
-78 unit and integration tests covering the shapes, RANSAC, the generator pipeline, the estimator orchestration, the tester, all three CLIs, and the Plotter smoke paths.
+87 unit and integration tests covering the shapes, RANSAC, the generator pipeline, the estimator orchestration, the tester, all three CLIs, and the Plotter smoke paths.
 
 ## Project layout
 
